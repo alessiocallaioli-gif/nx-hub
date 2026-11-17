@@ -1,0 +1,25 @@
+name: build
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: devkitpro/devkita64
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dipendenze di sistema e librerie Switch
+        run: |
+          apt-get update && apt-get install -y unzip curl
+          dkp-pacman -Sy --noconfirm switch-curl switch-sdl2 switch-sdl2_ttf switch-zlib
+      - name: Scarica json.hpp e miniz
+        run: |
+          curl -L -o source/json.hpp https://github.com/nlohmann/json/releases/download/v3.11.3/json.hpp
+          curl -L -o miniz.zip https://github.com/richgel999/miniz/releases/download/3.0.2/miniz-3.0.2.zip
+          unzip -j -o miniz.zip miniz.c miniz.h -d source
+      - run: make
+      - uses: actions/upload-artifact@v4
+        with:
+          name: switch-aio-manager
+          path: switch-aio-manager.nro
