@@ -130,7 +130,7 @@ static void rect(int x, int y, int w, int h, SDL_Color c, bool fill = true) {
 static void draw() {
     SDL_SetRenderDrawColor(R, 16, 18, 26, 255); SDL_RenderClear(R);
     rect(0, 0, 1280, 70, {24, 28, 42, 255});
-    text("Switch AIO Manager", 40, 18, {0, 220, 190, 255});
+    text("NX Hub", 40, 18, {0, 220, 190, 255});
     int upd = 0; for (auto& p : pkgs) upd += p.upd;
     text(std::to_string(upd) + " aggiornamenti disponibili", 900, 18, {255, 190, 60, 255});
     const int rowH = 76, visible = 7;
