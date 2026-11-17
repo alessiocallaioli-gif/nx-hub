@@ -19,7 +19,7 @@ OBJS     := source/main.o source/miniz.o
 all: $(TARGET).nro
 
 $(TARGET).nro: $(TARGET).elf
-> $(DEVKITPRO)/tools/bin/nacptool --create "Switch AIO Manager" "Switch AIO" "0.1.0" $(TARGET).nacp
+> $(DEVKITPRO)/tools/bin/nacptool --create "NX Hub" "NX Hub" "0.1.0" $(TARGET).nacp
 > $(DEVKITPRO)/tools/bin/elf2nro $< $@ --nacp=$(TARGET).nacp
 
 $(TARGET).elf: $(OBJS)
