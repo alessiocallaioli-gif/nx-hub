@@ -3,6 +3,7 @@ ifeq ($(strip $(DEVKITPRO)),)
 $(error DEVKITPRO non impostato)
 endif
 TARGET   := nx-hub
+ICON     := icon.jpg
 BIN      := $(DEVKITPRO)/devkitA64/bin/aarch64-none-elf-
 LIBNX    := $(DEVKITPRO)/libnx
 PORTLIBS := $(DEVKITPRO)/portlibs/switch
@@ -19,8 +20,8 @@ OBJS     := source/main.o source/miniz.o
 all: $(TARGET).nro
 
 $(TARGET).nro: $(TARGET).elf
-> $(DEVKITPRO)/tools/bin/nacptool --create "NX Hub" "NX Hub" "0.1.0" $(TARGET).nacp
-> $(DEVKITPRO)/tools/bin/elf2nro $< $@ --nacp=$(TARGET).nacp
+> $(DEVKITPRO)/tools/bin/nacptool --create "NX Hub" "NX Hub" "0.2.0" $(TARGET).nacp
+> $(DEVKITPRO)/tools/bin/elf2nro $< $@ --nacp=$(TARGET).nacp $(if $(wildcard $(ICON)),--icon=$(ICON))
 
 $(TARGET).elf: $(OBJS)
 > $(BIN)g++ $(LDFLAGS) $(OBJS) $(LIBS) -o $@

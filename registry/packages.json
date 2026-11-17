@@ -1,9 +1,89 @@
 {
   "packages": [
     {
+      "id": "nx-ovlloader",
+      "name": "nx-ovlloader",
+      "category": "overlay",
+      "repo": "ppkantorski/nx-ovlloader",
+      "asset_pattern": "nx-ovlloader.zip",
+      "install": "zip",
+      "target": "/",
+      "detect": "/atmosphere/contents/420000000007E51A/exefs.nsp"
+    },
+    {
+      "id": "ultrahand",
+      "name": "Ultrahand Overlay",
+      "category": "overlay",
+      "repo": "ppkantorski/Ultrahand-Overlay",
+      "asset_pattern": "ovlmenu.ovl",
+      "install": "file",
+      "target": "/switch/.overlays/ovlmenu.ovl",
+      "detect": "/switch/.overlays/ovlmenu.ovl"
+    },
+    {
+      "id": "status-monitor",
+      "name": "Status Monitor Overlay",
+      "category": "overlay",
+      "repo": "masagrator/Status-Monitor-Overlay",
+      "asset_pattern": "*.zip",
+      "install": "zip",
+      "target": "/",
+      "detect": "/switch/.overlays/Status-Monitor-Overlay.ovl"
+    },
+    {
+      "id": "edizon-overlay",
+      "name": "EdiZon Overlay",
+      "category": "overlay",
+      "repo": "proferabg/EdiZon-Overlay",
+      "asset_pattern": "*.ovl",
+      "install": "file",
+      "target": "/switch/.overlays/EdiZon.ovl",
+      "detect": "/switch/.overlays/EdiZon.ovl"
+    },
+    {
+      "id": "ovl-sysmodules",
+      "name": "ovl-sysmodules",
+      "category": "overlay",
+      "repo": "WerWolv/ovl-sysmodules",
+      "asset_pattern": "*.ovl",
+      "install": "file",
+      "target": "/switch/.overlays/ovlSysmodules.ovl",
+      "detect": "/switch/.overlays/ovlSysmodules.ovl"
+    },
+    {
+      "id": "fizeau",
+      "name": "Fizeau",
+      "category": "overlay",
+      "repo": "averne/Fizeau",
+      "asset_pattern": "*.zip",
+      "install": "zip",
+      "target": "/",
+      "detect": "/switch/.overlays/Fizeau.ovl"
+    },
+    {
+      "id": "emuiibo",
+      "name": "emuiibo",
+      "category": "sysmodule",
+      "repo": "XorTroll/emuiibo",
+      "asset_pattern": "emuiibo.zip",
+      "install": "zip",
+      "target": "/",
+      "detect": "/atmosphere/contents/0100000000000352/exefs.nsp"
+    },
+    {
+      "id": "sys-con",
+      "name": "sys-con",
+      "category": "sysmodule",
+      "repo": "cathery/sys-con",
+      "asset_pattern": "*.zip",
+      "install": "zip",
+      "target": "/",
+      "detect": "/atmosphere/contents/690000000000000D/exefs.nsp"
+    },
+    {
       "id": "checkpoint",
       "name": "Checkpoint",
-      "category": "homebrew",
+      "category": "app",
       "repo": "FlagBrew/Checkpoint",
       "asset_pattern": "Checkpoint.nro",
       "install": "file",
@@ -11,24 +91,84 @@
       "detect": "/switch/Checkpoint/Checkpoint.nro"
     },
     {
-      "id": "tico",
-      "name": "Tico",
-      "category": "homebrew",
-      "repo": "AUTORE/REPO-DI-TICO",
+      "id": "jksv",
+      "name": "JKSV",
+      "category": "app",
+      "repo": "J-D-K/JKSV",
       "asset_pattern": "*.nro",
       "install": "file",
-      "target": "/switch/tico/tico.nro",
-      "detect": "/switch/tico/tico.nro"
+      "target": "/switch/JKSV/JKSV.nro",
+      "detect": "/switch/JKSV/JKSV.nro"
     },
     {
-      "id": "aio-switch-updater",
+      "id": "nx-shell",
+      "name": "NX-Shell",
+      "category": "app",
+      "repo": "joel16/NX-Shell",
+      "asset_pattern": "*.nro",
+      "install": "file",
+      "target": "/switch/NX-Shell/NX-Shell.nro",
+      "detect": "/switch/NX-Shell/NX-Shell.nro"
+    },
+    {
+      "id": "ftpd",
+      "name": "ftpd",
+      "category": "app",
+      "repo": "mtheall/ftpd",
+      "asset_pattern": "ftpd.nro",
+      "install": "file",
+      "target": "/switch/ftpd/ftpd.nro",
+      "detect": "/switch/ftpd/ftpd.nro"
+    },
+    {
+      "id": "hb-appstore",
+      "name": "Homebrew App Store",
+      "category": "app",
+      "repo": "fortheusers/hb-appstore",
+      "asset_pattern": "*.nro",
+      "install": "file",
+      "target": "/switch/appstore/appstore.nro",
+      "detect": "/switch/appstore/appstore.nro"
+    },
+    {
+      "id": "moonlight",
+      "name": "Moonlight",
+      "category": "app",
+      "repo": "XITRIX/Moonlight-Switch",
+      "asset_pattern": "*.nro",
+      "install": "file",
+      "target": "/switch/Moonlight/Moonlight-Switch.nro",
+      "detect": "/switch/Moonlight/Moonlight-Switch.nro"
+    },
+    {
+      "id": "themes-installer",
+      "name": "NXThemes Installer",
+      "category": "app",
+      "repo": "exelix11/SwitchThemeInjector",
+      "asset_pattern": "*.nro",
+      "install": "file",
+      "target": "/switch/NXThemesInstaller/NXThemesInstaller.nro",
+      "detect": "/switch/NXThemesInstaller/NXThemesInstaller.nro"
+    },
+    {
+      "id": "aio-updater",
       "name": "AIO Switch Updater",
-      "category": "homebrew",
+      "category": "app",
       "repo": "HamletDuFromage/aio-switch-updater",
       "asset_pattern": "*.zip",
       "install": "zip",
       "target": "/",
       "detect": "/switch/aio-switch-updater/aio-switch-updater.nro"
+    },
+    {
+      "id": "tico",
+      "name": "Tico",
+      "category": "app",
+      "repo": "ticohq/tico",
+      "asset_pattern": "tico.nro",
+      "install": "file",
+      "target": "/switch/tico/tico.nro",
+      "detect": "/switch/tico/tico.nro"
     }
   ]
 }

@@ -1,24 +1,36 @@
-# Switch AIO Manager
+# NX Hub
 
-Updater per homebrew/overlay Switch basato su un catalogo JSON (`registry/packages.json`).
+All-in-one homebrew manager for Nintendo Switch. It keeps apps, overlays and sysmodules up to date
+from a community JSON catalog, and lets you add your own repositories.
 
-## Preparazione
-1. Installa devkitPro e: `dkp-pacman -S switch-dev switch-curl switch-sdl2 switch-sdl2_ttf switch-zlib`
-2. Metti in `source/`: `json.hpp` (nlohmann/json, single header) e `miniz.c` + `miniz.h` (release amalgamata).
-3. Copia il Makefile da `/opt/devkitpro/examples/switch/templates/application/Makefile` e imposta:
-   - `TARGET := switch-aio-manager`
-   - `CFLAGS += -DMINIZ_NO_TIME`
-   - `LIBS := $(shell aarch64-none-elf-pkg-config --libs sdl2 SDL2_ttf libcurl) -lnx`
-     (se il link fallisce, aggiungi le librerie mancanti segnalate dal linker)
-4. In `source/main.cpp` sostituisci `TUO_UTENTE` in `REGISTRY_URL` con il tuo utente GitHub.
-5. `make` -> ottieni `switch-aio-manager.nro` da copiare in `/switch/`.
+## Use
+Copy `nx-hub.nro` to `/switch/` and launch it from hbmenu (Wi-Fi required).
+**A** install/update · **Y** update all · **X** reload catalog · **+** exit.
+Back up your SD card before the first run: NX Hub writes into `/switch/` and `/atmosphere/`.
 
-## Catalogo
-- Ufficiale: `packages.json` nel repo del registro (scaricato all'avvio, con cache su SD).
-- Personale: `/config/switch-aio/custom.json` sulla SD, stesso formato.
-- Campi: `install` = `zip` (estrae in `target`) oppure `file` (salva l'asset in `target`).
-  Opzionali `latest` e `url` per evitare le chiamate all'API GitHub (si possono generare con una GitHub Action).
+## Catalog
+- `registry/packages.json` is the source list (edit this one, via pull request).
+- A GitHub Action (`update-registry`) resolves latest versions hourly into `registry/resolved.json`,
+  which is what the app downloads (one request, no GitHub rate-limit issues).
+- Personal packages: put a `custom.json` in `/config/nx-hub/` on the SD, same format.
 
-## Compilare senza installare nulla (GitHub Actions)
-Carica il progetto in un repo GitHub: la Action in `.github/workflows/build.yml` scarica da sola
-json.hpp e miniz, compila e pubblica `switch-aio-manager.nro` tra gli *Artifacts* della run (scheda Actions).
+```json
+{ "id": "my-app", "name": "My App", "category": "app",
+  "repo": "owner/repo", "asset_pattern": "*.nro",
+  "install": "file", "target": "/switch/MyApp/MyApp.nro",
+  "detect": "/switch/MyApp/MyApp.nro" }
+```
+`install`: `file` saves the release asset to `target`; `zip` extracts the archive under `target`.
+`detect` is used to recognise packages already installed by hand.
+
+## Not included on purpose
+Custom firmware (Atmosphere, Hekate) and anything piracy-oriented. You can still add them yourself in `custom.json`.
+
+## Build
+Pushing to `main` builds `nx-hub.nro` with GitHub Actions (artifact `nx-hub`).
+Locally: devkitPro + `switch-curl switch-sdl2 switch-sdl2_ttf switch-zlib`, plus `json.hpp` and `miniz` in `source/`.
+
+## Debug
+Launch with `nxlink -s nx-hub.nro` to see logs on your PC.
+
+License: GPL-3.0.

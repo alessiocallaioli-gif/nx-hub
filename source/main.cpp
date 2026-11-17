@@ -1,4 +1,4 @@
-// Switch AIO Manager - updater basato su catalogo JSON (bozza, non ancora compilata/testata)
+// NX Hub - updater all-in-one per homebrew Switch basato su catalogo JSON
 #include <switch.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
@@ -14,8 +14,8 @@
 using json = nlohmann::json;
 using std::string;
 
-#define REGISTRY_URL "https://raw.githubusercontent.com/alessiocallaioli-gif/nx-hub/main/registry/packages.json"
-#define CFG "/config/switch-aio/"
+#define REGISTRY_URL "https://raw.githubusercontent.com/alessiocallaioli-gif/nx-hub/main/registry/resolved.json"
+#define CFG "/config/nx-hub/"
 
 struct Pkg {
     string id, name, cat, repo, pattern, type, target, detect, latest, url, installed, status;
@@ -26,6 +26,15 @@ static json installedDb = json::object();
 static SDL_Renderer* R;
 static TTF_Font* F;
 static int sel = 0;
+static void banner(const string& m);
+static string g_msg; static int g_last = -1;
+static int prog(void*, curl_off_t dt, curl_off_t dn, curl_off_t, curl_off_t) {
+    if (!g_msg.empty() && dt > 0) {
+        int pct = (int)(dn * 100 / dt);
+        if (pct != g_last) { g_last = pct; banner(g_msg + "  " + std::to_string(pct) + "%"); }
+    }
+    return 0;
+}
 
 // ---------- utilita' ----------
 static size_t wr(void* p, size_t s, size_t n, void* u) { ((string*)u)->append((char*)p, s * n); return s * n; }
@@ -37,7 +46,9 @@ static bool httpGet(const string& url, string& out) {
     curl_easy_setopt(c, CURLOPT_USERAGENT, "switch-aio-manager");
     curl_easy_setopt(c, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(c, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(c, CURLOPT_TIMEOUT, 60L);
+    curl_easy_setopt(c, CURLOPT_TIMEOUT, 120L);
+    curl_easy_setopt(c, CURLOPT_NOPROGRESS, 0L);
+    curl_easy_setopt(c, CURLOPT_XFERINFOFUNCTION, prog);
     CURLcode rc = curl_easy_perform(c); long code = 0;
     curl_easy_getinfo(c, CURLINFO_RESPONSE_CODE, &code);
     curl_easy_cleanup(c);
@@ -90,8 +101,9 @@ static void refresh(Pkg& p) {
 }
 
 static bool install(Pkg& p) {
-    string data;
-    if (!httpGet(p.url, data)) return false;
+    string data; g_msg = "Scarico " + p.name; g_last = -1;
+    bool ok = httpGet(p.url, data); g_msg.clear();
+    if (!ok) return false;
     if (p.type == "file") {
         writeFile(p.target, data);
     } else {
@@ -162,7 +174,7 @@ static void loadAll() {
 }
 
 int main() {
-    socketInitializeDefault(); plInitialize(PlServiceType_User); curl_global_init(CURL_GLOBAL_DEFAULT);
+    socketInitializeDefault(); nxlinkStdio(); plInitialize(PlServiceType_User); curl_global_init(CURL_GLOBAL_DEFAULT);
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK); TTF_Init();
     SDL_Window* w = SDL_CreateWindow("aio", 0, 0, 1280, 720, SDL_WINDOW_FULLSCREEN);
     R = SDL_CreateRenderer(w, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
