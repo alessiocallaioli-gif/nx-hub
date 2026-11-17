@@ -1,0 +1,34 @@
+{
+  "packages": [
+    {
+      "id": "checkpoint",
+      "name": "Checkpoint",
+      "category": "homebrew",
+      "repo": "FlagBrew/Checkpoint",
+      "asset_pattern": "Checkpoint.nro",
+      "install": "file",
+      "target": "/switch/Checkpoint/Checkpoint.nro",
+      "detect": "/switch/Checkpoint/Checkpoint.nro"
+    },
+    {
+      "id": "tico",
+      "name": "Tico",
+      "category": "homebrew",
+      "repo": "AUTORE/REPO-DI-TICO",
+      "asset_pattern": "*.nro",
+      "install": "file",
+      "target": "/switch/tico/tico.nro",
+      "detect": "/switch/tico/tico.nro"
+    },
+    {
+      "id": "aio-switch-updater",
+      "name": "AIO Switch Updater",
+      "category": "homebrew",
+      "repo": "HamletDuFromage/aio-switch-updater",
+      "asset_pattern": "*.zip",
+      "install": "zip",
+      "target": "/",
+      "detect": "/switch/aio-switch-updater/aio-switch-updater.nro"
+    }
+  ]
+}
