@@ -26,5 +26,5 @@ jobs:
       - run: make
       - uses: actions/upload-artifact@v4
         with:
-          name: switch-aio-manager
-          path: switch-aio-manager.nro
+          name: nx-hub
+          path: nx-hub.nro
