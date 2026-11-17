@@ -12,7 +12,12 @@ jobs:
       - name: Dipendenze di sistema e librerie Switch
         run: |
           apt-get update && apt-get install -y unzip curl
-          dkp-pacman -Sy --noconfirm switch-curl switch-sdl2 switch-sdl2_ttf switch-zlib
+          for i in 1 2 3 4 5; do
+            dkp-pacman -Sy --noconfirm switch-curl switch-sdl2 switch-sdl2_ttf switch-zlib && break
+            echo "Tentativo $i fallito, riprovo tra 20 secondi"
+            sleep 20
+          done
+          test -f /opt/devkitpro/portlibs/switch/lib/libSDL2_ttf.a
       - name: Scarica json.hpp e miniz
         run: |
           curl -L -o source/json.hpp https://github.com/nlohmann/json/releases/download/v3.11.3/json.hpp
