@@ -2,7 +2,7 @@
 ifeq ($(strip $(DEVKITPRO)),)
 $(error DEVKITPRO non impostato)
 endif
-TARGET   := switch-aio-manager
+TARGET   := nx-hub
 BIN      := $(DEVKITPRO)/devkitA64/bin/aarch64-none-elf-
 LIBNX    := $(DEVKITPRO)/libnx
 PORTLIBS := $(DEVKITPRO)/portlibs/switch
