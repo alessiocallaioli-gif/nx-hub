@@ -1,0 +1,8 @@
+*.o
+*.elf
+*.nro
+*.nacp
+*.map
+source/json.hpp
+source/miniz.c
+source/miniz.h
