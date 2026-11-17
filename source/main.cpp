@@ -14,7 +14,7 @@
 using json = nlohmann::json;
 using std::string;
 
-#define REGISTRY_URL "https://raw.githubusercontent.com/alessiocallaioli-gif/switch-aio-registry/main/packages.json"
+#define REGISTRY_URL "https://raw.githubusercontent.com/alessiocallaioli-gif/nx-hub/main/registry/packages.json"
 #define CFG "/config/switch-aio/"
 
 struct Pkg {
